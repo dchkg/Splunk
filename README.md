@@ -1,12 +1,15 @@
 ## Splunk Quick Cheat Sheet
 
-**DNS Lookup**
+**Find out which HF receiving syslog**
 ```
-| lookup dnslookup clientip as dest_ip OUTPUT clienthost as dest_host
+ index=_* series IN (paloalto* fortinet*) host!=*splunkcloud*
+
+| bin _time span=30m
+
+| timechart values(series) by host
 ```
 **DNS Independent IP Resolution**
 ```
-| inputlookup tHostInfo
-| search src_ip=$IPADDRESS$ OR src_host=$HOSTNAME$
+
 ```
 
